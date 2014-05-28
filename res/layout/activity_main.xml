@@ -1,0 +1,56 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="${packageName}.${activityClass}" >
+
+    <!-- the first you need to do is to delcare the root element -->
+    <!--android:id is a unique identifier for the view. Sample: "android:@+id/my_id", in order to find this you 
+        need to use: findViewById(R.id.my_id) -->
+        
+    <!--The at sign (@) is required when you're referring to any resource object from XML. It is followed by the 
+        "resource type" (id in this case), a slash, then the resource name -->
+        
+	<!--The at-symbol (@) at the beginning of the string indicates that the XML parser should parse and expand 
+	    the rest of the ID string and identify it as an ID resource. -->
+	    
+	<!-- there is the resource type and resource name. the id is stored in the gen/R.java -->
+	
+	<!--  The plus sign (+) before the resource type is needed only when you're defining a resource ID for the first time.
+     	  When you compile the app, the SDK tools use the ID name to create a new resource ID in 
+     	  your project's gen/R.java file that refers to the EditText element. 
+    	  Once the resource ID is declared once this way, other references to the ID do not need the plus sign. 
+     	  Using the plus sign is necessary only when specifying a new resource ID and not needed for 
+     	  concrete resources such as strings or layouts. See the sidebox for more information about resource objects.-->
+     	  
+    <!-- hint is what appears when the edit_text box is empty -->
+
+	<EditText
+	    android:id="@+id/txt_title"
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:hint="@string/txt_Title" />
+
+	<Button
+	    android:id="@+id/btn_createBroadcast_id"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:onClick="getCreateBroadcastButton"
+	    android:text="@string/btn_name" />
+
+	<ScrollView
+	    android:id="@+id/scroller_id"
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:fillViewport="true"
+	    android:scrollbars="vertical" >
+
+	    <TextView
+	        android:id="@+id/tap_log_id"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content" />
+	</ScrollView>
+	
+
+</LinearLayout>

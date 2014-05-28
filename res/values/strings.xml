@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">test1001</string>
+    <string name="btn_name">Create Broadcast</string>
+    <string name="pick_account">Pick Account</string>
+    <string name="txt_Title">Enter title for your broadcast</string>
+    <string name="title_activity_youtube_broadcast1">YoutubeBroadcast1</string>
+    <string name="hello_world">Hello world!</string>
+
+</resources>

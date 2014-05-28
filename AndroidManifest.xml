@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.test1001"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <uses-sdk
+        android:minSdkVersion="8"
+        android:targetSdkVersion="19" />
+    <!-- Application element -->
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme" >
+
+        <!-- You must declare your activity in the manifest file in order for it to be accessible to the system -->
+        <!-- The android:name attribute is the only required attribute—it specifies the class name of the activity. -->
+
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" >
+        </meta-data>
+
+        <!-- Declare Activities with its corresponding filters -->
+        <activity
+            android:name="com.example.test1001.MainActivity"
+            android:label="@string/app_name" >
+
+            <!--
+                         An <activity> element can also specify various intent filters—using the <intent-filter> element—in order 
+		                 to declare how other application components may activate it.
+            -->
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.example.test1001.YoutubeBroadcast1"
+            android:label="@string/title_activity_youtube_broadcast1" >
+        </activity>
+    </application>
+
+</manifest>
