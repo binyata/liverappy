@@ -40,7 +40,7 @@ public class CreateBroadcastEvent extends AsyncTask<String, Void, String>{
 	protected String doInBackground(String... params) {
 		try{
 			String token = fetchToken();
-			mActivity.show("Token fetchwed");
+			mActivity.show("Token fetcssshwed");
 			if( token != null){
 				mActivity.show("Token :" + token);
 			}	
