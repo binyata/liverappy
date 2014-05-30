@@ -30,14 +30,14 @@ public class MainActivity extends Activity{
 
 	
     // Android Display Components 
-	private TextView tapLog; 			    // Create a text area panel
+	public TextView tapLog; 			    // Create a text area panel
 	private static  EditText txtTITLE;		// Create a text field for input
 	
 	
 	// Variables needed to get token and able to do API request
 	private String mEmail;																	// Received from newChooseAccountIntent(); passed to getToken() 
 	private static final String SCOPE = "oauth2:https://www.googleapis.com/auth/youtube";   // URI for scope 
-
+	public String token;
 	
 	
 	// -------------------------------------Start-onCreate() -----------------------------------------//	
@@ -53,6 +53,7 @@ public class MainActivity extends Activity{
 		//Assigns display component
 		this.tapLog = (TextView)(findViewById(R.id.tap_log_id));
 		txtTITLE = (EditText)(findViewById(R.id.txt_title));
+		
 		
 	}
 	
@@ -81,9 +82,11 @@ public class MainActivity extends Activity{
 			show("Open dialog to get the email(username");
             pickUserAccount();
         } else {
-				this.show("CreateBroadcastEvent is instantiated to get token");
+				this.show("CreateBroadcastEvent is executed");
 				new CreateBroadcastEvent(MainActivity.this, mEmail, SCOPE).execute();
+				
 		}
+		
 	}
 
 	
@@ -180,6 +183,10 @@ public class MainActivity extends Activity{
         });
     }
     
+    
+    public void setToken(String value){
+    	this.token = value;
+    }
     
    
   

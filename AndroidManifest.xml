@@ -40,10 +40,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name="com.example.test1001.YoutubeBroadcast1"
-            android:label="@string/title_activity_youtube_broadcast1" >
-        </activity>
+        
+      
     </application>
 
 </manifest>

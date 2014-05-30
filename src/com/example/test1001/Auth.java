@@ -14,7 +14,7 @@ public class Auth {
 	protected MainActivity mActivity;
 	public static final HttpTransport HTTP_TRANSPORT = new NetHttpTransport();
 	public static final JsonFactory JSON_FACTORY = new JacksonFactory();
-	private String token;
+	protected String token;
 	private TokenResponse tokenRes;
 		
 		
