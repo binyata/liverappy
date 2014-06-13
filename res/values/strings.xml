@@ -7,5 +7,6 @@
     <string name="txt_Title">Enter title for your broadcast</string>
     <string name="title_activity_youtube_broadcast1">YoutubeBroadcast1</string>
     <string name="hello_world">Hello world!</string>
+    <string name="adv_settings">Advanced Settings</string>
 
 </resources>

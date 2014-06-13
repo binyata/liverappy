@@ -89,6 +89,8 @@ public class CreateBroadcastEvent extends AsyncTask<Void, Void, Void>{
 	private void createYoutubeBroadcast(Auth auth){
 		try{
 		// Builds the YouTube Object 
+			
+					// This method needs to be broken down
 					youtube = new YouTube.Builder(
 							Auth.HTTP_TRANSPORT
 							, Auth.JSON_FACTORY
