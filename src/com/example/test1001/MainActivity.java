@@ -13,7 +13,10 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -31,7 +34,8 @@ public class MainActivity extends Activity{
 	
     // Android Display Components 
 	public TextView tapLog; 			    // Create a text area panel
-	private static  EditText txtTITLE;		// Create a text field for input
+	private EditText txtTitle;		// Create a text field for input
+	private Button btnCreateBroadCast;
 	
 	
 	// Variables needed to get token and able to do API request
@@ -52,7 +56,11 @@ public class MainActivity extends Activity{
 		
 		//Assigns display component
 		this.tapLog = (TextView)(findViewById(R.id.tap_log_id));
-		txtTITLE = (EditText)(findViewById(R.id.txt_title));
+		txtTitle = (EditText)(findViewById(R.id.txt_title));
+		this.btnCreateBroadCast = (Button) findViewById(R.id.btn_createBroadcast_id);
+		
+		//Build buttons
+		this.addButtons();
 		
 		
 	}
@@ -63,7 +71,38 @@ public class MainActivity extends Activity{
 	
 	
 	
+	
 	// ------------------------------------- Begin Methods -------------------------------------------//
+	
+	/**
+	 * 
+	 */
+	private void addButtons(){
+		
+		/* If there is nothing in the edittext, the btnCreateBroadcast is grayed out.
+		 * If there is something, then is not grayed out. 
+		 */
+		txtTitle.addTextChangedListener(new TextWatcher() {
+			
+			@Override
+			public void onTextChanged(CharSequence s, int start, int before, int count){}
+			
+			@Override
+			public void beforeTextChanged(CharSequence s, int start, int count,
+					int after) {}
+			
+			@Override
+			public void afterTextChanged(Editable s) {
+				if(txtTitle.getText().toString().equals(""))
+					btnCreateBroadCast.setEnabled(false);
+				if(txtTitle.getText().toString().length() > 0){
+					btnCreateBroadCast.setEnabled(true);
+				}
+			}
+		});	
+	}
+	
+	
 	
 	/**
 	 * It launches when a the "CreateBroadcast button is pressed. This method launches
@@ -94,7 +133,7 @@ public class MainActivity extends Activity{
 	 * Gets the title name for the broadcast
 	 */
 	public String getTitleName(){
-		return txtTITLE.getText().toString();
+		return txtTitle.getText().toString();
 	}
 	
 	

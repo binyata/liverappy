@@ -30,14 +30,16 @@
 	    android:id="@+id/txt_title"
 	    android:layout_width="match_parent"
 	    android:layout_height="wrap_content"
-	    android:hint="@string/txt_Title" />
+		android:hint="@string/txt_Title"
+	    android:inputType="textAutoCorrect"/>"
 
 	<Button
 	    android:id="@+id/btn_createBroadcast_id"
 	    android:layout_width="wrap_content"
 	    android:layout_height="wrap_content"
 	    android:onClick="getCreateBroadcastButton"
-	    android:text="@string/btn_name" />
+		android:text="@string/btn_name" 
+	    android:enabled="false"/>
 
 	<ScrollView
 	    android:id="@+id/scroller_id"

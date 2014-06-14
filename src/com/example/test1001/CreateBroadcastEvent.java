@@ -4,6 +4,10 @@ package com.example.test1001;
 // Imports
 import java.io.IOException;
 
+
+
+
+
 import com.google.android.gms.auth.GoogleAuthException;
 import com.google.android.gms.auth.GoogleAuthUtil;
 import com.google.android.gms.auth.UserRecoverableAuthException;
@@ -40,7 +44,7 @@ public class CreateBroadcastEvent extends AsyncTask<Void, Void, Void>{
 	//---------------------------------- End-of-Constructor-------------------------------------------//
 
 	
-	// ------------------------------------ Begin Methods --------------------------------------------//
+	// ------------------------------------ Begin Method --------------------------------------------//
 	
 
 	/*
@@ -99,7 +103,8 @@ public class CreateBroadcastEvent extends AsyncTask<Void, Void, Void>{
 					// Prompt the user to enter a title for the broadcast.
 					LiveBroadcastSnippet broadcastSnippet = new LiveBroadcastSnippet();
 					broadcastSnippet.setTitle(mActivity.getTitleName());
-					broadcastSnippet.setScheduledStartTime(new DateTime("2014-05-29T20:23:00-06:00"));
+					broadcastSnippet.setScheduledStartTime(new DateTime("2014-06-15T20:23:00-06:00"));
+					
 
 
 					// Create a snippet with the title and scheduled start and end
