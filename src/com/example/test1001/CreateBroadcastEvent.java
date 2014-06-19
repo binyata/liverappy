@@ -103,8 +103,8 @@ public class CreateBroadcastEvent extends AsyncTask<Void, Void, Void>{
 					// Prompt the user to enter a title for the broadcast.
 					LiveBroadcastSnippet broadcastSnippet = new LiveBroadcastSnippet();
 					broadcastSnippet.setTitle(mActivity.getTitleName());
-					broadcastSnippet.setScheduledStartTime(new DateTime("2014-06-15T20:23:00-06:00"));
-					
+					broadcastSnippet.setScheduledStartTime(new DateTime(mActivity.getdater() + "T20:" + mActivity.getwatch()));
+					// "2014-06-15T20:23:00-06:00"
 
 
 					// Create a snippet with the title and scheduled start and end
