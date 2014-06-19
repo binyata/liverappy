@@ -56,12 +56,11 @@ public class MainActivity extends Activity{
 		
 		//Assigns display component
 		this.tapLog = (TextView)(findViewById(R.id.tap_log_id));
-		txtTitle = (EditText)(findViewById(R.id.txt_title));
+		this.txtTitle = (EditText)(findViewById(R.id.txt_title));
 		this.btnCreateBroadCast = (Button) findViewById(R.id.btn_createBroadcast_id);
 		
 		//Build buttons
 		this.addButtons();
-		
 		
 	}
 	
@@ -75,7 +74,7 @@ public class MainActivity extends Activity{
 	// ------------------------------------- Begin Methods -------------------------------------------//
 	
 	/**
-	 * 
+	 * Makes the "CreateBroadcast" button responsive with the respective textField
 	 */
 	private void addButtons(){
 		
@@ -121,7 +120,7 @@ public class MainActivity extends Activity{
 			show("Open dialog to get the email(username");
             pickUserAccount();
         } else {
-				this.show("CreateBroadcastEvent is executed");
+				this.show("CreateBroadcastEvent class is instantiated");
 				new CreateBroadcastEvent(MainActivity.this, mEmail, SCOPE).execute();
 				
 		}
@@ -210,8 +209,7 @@ public class MainActivity extends Activity{
      
     
     /**
-     * This method is a hook for background threads and async tasks that need to update the UI.
-     * It does this by launching a runnable under the UI thread.
+     * Access the UI thread from other threats. You can use this as a debuging tool.
      */
     public void show(final String message) {
         runOnUiThread(new Runnable() {
@@ -221,7 +219,6 @@ public class MainActivity extends Activity{
             }
         });
     }
-    
     
     public void setToken(String value){
     	this.token = value;

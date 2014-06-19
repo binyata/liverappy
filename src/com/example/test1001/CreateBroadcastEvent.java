@@ -8,6 +8,8 @@ import java.io.IOException;
 
 
 
+import java.util.Date;
+
 import com.google.android.gms.auth.GoogleAuthException;
 import com.google.android.gms.auth.GoogleAuthUtil;
 import com.google.android.gms.auth.UserRecoverableAuthException;
@@ -23,18 +25,20 @@ import com.google.api.services.youtube.model.LiveStreamSnippet;
 import android.os.AsyncTask;
 //----------------------------------------------------Begin Class -------------------------------------------------------//
 public class CreateBroadcastEvent extends AsyncTask<Void, Void, Void>{
-	
+
 	//-------------------------------------- Class Variables ------------------------------------------//
-	
+
 	//Attributes to get the Token
 	protected MainActivity mActivity;
 	protected String mScope;
 	protected String mEmail;
 
-	
-	//Attributes to do the YouTube API request (post)
+	/*
+	 * Define a global instance of a Youtube object, which will be used
+	 * to make YouTube Data API requests.
+	 */
 	private static YouTube youtube;
-	
+
 	// -------------------------------------Constructor ----------------------------------------------//
 	CreateBroadcastEvent(MainActivity activity, String name, String scope) {
 		this.mActivity = activity;
@@ -43,9 +47,9 @@ public class CreateBroadcastEvent extends AsyncTask<Void, Void, Void>{
 	}
 	//---------------------------------- End-of-Constructor-------------------------------------------//
 
-	
-	// ------------------------------------ Begin Method --------------------------------------------//
-	
+
+	// ------------------------------------ doInBackground() --------------------------------------------//
+
 
 	/*
 	 * Executes the asynchronous job. This runs when you call "execute()"
@@ -68,7 +72,7 @@ public class CreateBroadcastEvent extends AsyncTask<Void, Void, Void>{
 		try{
 			String token = fetchToken();
 			if( token != null){
-				
+				// calls the method to construct the Youtube object. 
 				this.createYoutubeBroadcast(new Auth(token));
 			}
 		}catch(IOException ex){
@@ -79,69 +83,72 @@ public class CreateBroadcastEvent extends AsyncTask<Void, Void, Void>{
 		}catch(Exception ex){
 			mActivity.show(ex.getMessage());
 		}
-
 		return null;
 	}
-	
-	
-	
-	
+	// ------------------------------------ Begin Method --------------------------------------------//
+
 	/*
 	 * This method creates the Youtube Object and of all its components (i.e. title, time,)
-	 * THIS NEEDS TO BE DEELPLY ANALYZED. This method needs to be split up in other methods or classes.
+	 * However, this is bad coding. The method needs to be spit into classes. 
 	 */
+	
 	private void createYoutubeBroadcast(Auth auth){
-		try{
-		// Builds the YouTube Object 
-			
-					// This method needs to be broken down
-					youtube = new YouTube.Builder(
-							Auth.HTTP_TRANSPORT
-							, Auth.JSON_FACTORY
-							, auth.getCredential()).setApplicationName("Martin").build();
-					mActivity.show("youtube object created");
-					// Prompt the user to enter a title for the broadcast.
-					LiveBroadcastSnippet broadcastSnippet = new LiveBroadcastSnippet();
+		try{ 
+
+			// This object is used to make YouTube Data API requests.
+			youtube = new YouTube.Builder(
+					Auth.HTTP_TRANSPORT
+					, Auth.JSON_FACTORY
+					, auth.getCredential()).setApplicationName("Martin").build();
+			mActivity.show("Authentication passed." + '\n' + "Youtube Object created");     	 // debug code							
+ 
+						
+			// Creates a Broadcast snippet object
+			LiveBroadcastSnippet broadcastSnippet = new LiveBroadcastSnippet();
+					// Get the title for the broadcast event
 					broadcastSnippet.setTitle(mActivity.getTitleName());
-					broadcastSnippet.setScheduledStartTime(new DateTime("2014-06-15T20:23:00-06:00"));
-					
-
-
-					// Create a snippet with the title and scheduled start and end
-					// times for the broadcast. Currently, those times are hard-coded.
-					LiveBroadcastStatus status = new LiveBroadcastStatus();
-					status.setPrivacyStatus("private");
-					LiveBroadcast broadcast = new LiveBroadcast();
+					// Set the scheduled start time for the broadcast event
+					broadcastSnippet.setScheduledStartTime(new DateTime("2014-06-16T20:23:00-06:00"));
+				
+			// Creates a Broadcast status object
+			LiveBroadcastStatus status = new LiveBroadcastStatus();
+					// Set attributes 
+					status.setPrivacyStatus("private");                      
+			
+			// Creates a broadcast object (a mix of Snippet and Status)
+			LiveBroadcast broadcast = new LiveBroadcast();
 					broadcast.setKind("youtube#liveBroadcast");
 					broadcast.setSnippet(broadcastSnippet);
 					broadcast.setStatus(status);
 
-					// Construct and execute the API request to insert the broadcast.
-					YouTube.LiveBroadcasts.Insert liveBroadcastInsert =
-							youtube.liveBroadcasts().insert("snippet,status", broadcast);
-					LiveBroadcast returnedBroadcast = liveBroadcastInsert.execute();
 
-					// Create a snippet with the video stream's title.
-					LiveStreamSnippet streamSnippet = new LiveStreamSnippet();
-					streamSnippet.setTitle(mActivity.getTitleName() + "IO");
-					CdnSettings cdnSettings = new CdnSettings();
-					cdnSettings.setFormat("240p");
-					cdnSettings.setIngestionType("rtmp");
-					LiveStream stream = new LiveStream();
-					stream.setKind("youtube#liveStream");
-					stream.setSnippet(streamSnippet);
-					stream.setCdn(cdnSettings);
+			// Construct and execute the API request to insert the broadcast.
+			YouTube.LiveBroadcasts.Insert liveBroadcastInsert =
+					youtube.liveBroadcasts().insert("snippet,status", broadcast);
+			LiveBroadcast returnedBroadcast = liveBroadcastInsert.execute();
 
-					// Construct and execute the API request to insert the stream.
-					YouTube.LiveStreams.Insert liveStreamInsert =
-							youtube.liveStreams().insert("snippet,cdn", stream);
-					LiveStream returnedStream = liveStreamInsert.execute();
+						
+			// Create a snippet with the video stream's title.
+			LiveStreamSnippet streamSnippet = new LiveStreamSnippet();
+			streamSnippet.setTitle(mActivity.getTitleName() + "IO");
+			CdnSettings cdnSettings = new CdnSettings();
+			cdnSettings.setFormat("240p");
+			cdnSettings.setIngestionType("rtmp");
+			LiveStream stream = new LiveStream();
+			stream.setKind("youtube#liveStream");
+			stream.setSnippet(streamSnippet);
+			stream.setCdn(cdnSettings);
 
-					YouTube.LiveBroadcasts.Bind liveBroadcastBind =
-							youtube.liveBroadcasts().bind(returnedBroadcast.getId(), "id,contentDetails");
-					liveBroadcastBind.setStreamId(returnedStream.getId());
-					returnedBroadcast = liveBroadcastBind.execute();  
-					mActivity.show("BroadCast and LiveStream created Successfully!");
+			// Construct and execute the API request to insert the stream.
+			YouTube.LiveStreams.Insert liveStreamInsert =
+					youtube.liveStreams().insert("snippet,cdn", stream);
+			LiveStream returnedStream = liveStreamInsert.execute();
+
+			YouTube.LiveBroadcasts.Bind liveBroadcastBind =
+					youtube.liveBroadcasts().bind(returnedBroadcast.getId(), "id,contentDetails");
+			liveBroadcastBind.setStreamId(returnedStream.getId());
+			returnedBroadcast = liveBroadcastBind.execute();  
+			mActivity.show("BroadCast and LiveStream created Successfully!");
 		}catch(IOException ex){
 			// The fetchToken() method handles Google-specific exceptions,
 			// so this indicates something went wrong at a higher level.
@@ -152,9 +159,9 @@ public class CreateBroadcastEvent extends AsyncTask<Void, Void, Void>{
 		}
 
 	}
-	
-	
-	
+
+
+
 	/**
 	 * Get a authentication token if one is not available. If the error is not recoverable then
 	 * it displays the error message on parent activity right away.
@@ -176,23 +183,23 @@ public class CreateBroadcastEvent extends AsyncTask<Void, Void, Void>{
 		}
 		return null;
 	}
-	
-	
-	
-	
-	
-	
-	
 
-	
+
+
+
+
+
+
+
+
 	// ---------------------------------------- End Methods --------------------------------------------//
-	
-	
+
+
 }
 //----------------------------------------------------End Class -------------------------------------------------------//
-	
-	
-	
 
-	
-	
+
+
+
+
+

@@ -24,11 +24,13 @@ public class Auth {
 		this.tokenRes.setAccessToken(token);
 	}
 	
-	
+	// Gets the Credential object
 	public Credential getCredential(){
+		// calls the private method to create a credential object
 		return createCredentialWithAccessTokenOnly(HTTP_TRANSPORT, JSON_FACTORY, this.tokenRes);
 	}
 	
+	// Creates a Credential object .
 	private Credential createCredentialWithAccessTokenOnly(
 			HttpTransport transport
 			, JsonFactory jsonFactory
