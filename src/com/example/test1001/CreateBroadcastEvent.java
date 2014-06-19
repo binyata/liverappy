@@ -107,9 +107,10 @@ public class CreateBroadcastEvent extends AsyncTask<Void, Void, Void>{
 			LiveBroadcastSnippet broadcastSnippet = new LiveBroadcastSnippet();
 					// Get the title for the broadcast event
 					broadcastSnippet.setTitle(mActivity.getTitleName());
-					// Set the scheduled start time for the broadcast event
-					broadcastSnippet.setScheduledStartTime(new DateTime("2014-06-16T20:23:00-06:00"));
-				
+
+			broadcastSnippet.setScheduledStartTime(new DateTime(mActivity.getdater() + "T20:" + mActivity.getwatch()));
+			// "2014-06-15T20:23:00-06:00"
+
 			// Creates a Broadcast status object
 			LiveBroadcastStatus status = new LiveBroadcastStatus();
 					// Set attributes 
@@ -117,6 +118,7 @@ public class CreateBroadcastEvent extends AsyncTask<Void, Void, Void>{
 			
 			// Creates a broadcast object (a mix of Snippet and Status)
 			LiveBroadcast broadcast = new LiveBroadcast();
+
 					broadcast.setKind("youtube#liveBroadcast");
 					broadcast.setSnippet(broadcastSnippet);
 					broadcast.setStatus(status);

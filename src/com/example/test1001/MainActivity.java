@@ -36,7 +36,8 @@ public class MainActivity extends Activity{
 	public TextView tapLog; 			    // Create a text area panel
 	private EditText txtTitle;		// Create a text field for input
 	private Button btnCreateBroadCast;
-	
+	private EditText watch;
+	private EditText dater;
 	
 	// Variables needed to get token and able to do API request
 	private String mEmail;																	// Received from newChooseAccountIntent(); passed to getToken() 
@@ -56,7 +57,10 @@ public class MainActivity extends Activity{
 		
 		//Assigns display component
 		this.tapLog = (TextView)(findViewById(R.id.tap_log_id));
-		this.txtTitle = (EditText)(findViewById(R.id.txt_title));
+
+		txtTitle = (EditText)(findViewById(R.id.txt_title));
+		watch = (EditText)(findViewById(R.id.watch));
+		dater = (EditText)(findViewById(R.id.dater));
 		this.btnCreateBroadCast = (Button) findViewById(R.id.btn_createBroadcast_id);
 		
 		//Build buttons
@@ -125,6 +129,18 @@ public class MainActivity extends Activity{
 				
 		}
 		
+	}
+	// return the time
+	public String getwatch(){
+		
+		return watch.getText().toString();
+		
+	}
+	
+	public String getdater(){
+		
+		
+		return dater.getText().toString();
 	}
 
 	
