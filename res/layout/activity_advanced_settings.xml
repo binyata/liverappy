@@ -1,0 +1,32 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="${packageName}.${activityClass}" >
+
+    <EditText
+       android:id="@+id/watch"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:hint="@string/st_txt_startTime"
+       android:inputType="textAutoCorrect" />
+   
+   
+   <!--  This will add the edit textbox -->
+   <EditText
+       android:id="@+id/dater"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:hint="@string/st_txt_startDate"
+       android:inputType="textAutoCorrect" />
+   
+   <Button 
+       android:id="@+id/btn_liveEventsPage"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:text="@string/st_btn_YoutubeAccount"
+       android:onClick="goToYoutubeAccount"/>
+   
+
+</LinearLayout>

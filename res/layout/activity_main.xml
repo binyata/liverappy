@@ -41,21 +41,19 @@
 		android:text="@string/btn_name" 
 	    android:enabled="false"/>
 	<!--  This will add the edit textbox -->
-   <EditText
-       android:id="@+id/watch"
-       android:layout_width="match_parent"
-       android:layout_height="wrap_content"
-       android:hint="Set time here, example(13:11-13:33)"
-       android:inputType="textAutoCorrect" />
+	
+	<Button
+	    android:id="@+id/btn_advSettings_id"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:onClick="getAdvanceSettings"
+		android:text="@string/btn_advSettings" 
+		android:textSize="12sp"
+	    android:enabled="true"/>
+	
+	
+	
    
-   
-   <!--  This will add the edit textbox -->
-   <EditText
-       android:id="@+id/dater"
-       android:layout_width="match_parent"
-       android:layout_height="wrap_content"
-       android:hint="Set date here, example(2014-06-18)"
-       android:inputType="textAutoCorrect" />
 	    
 	<ScrollView
 	    android:id="@+id/scroller_id"

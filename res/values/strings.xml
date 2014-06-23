@@ -7,6 +7,12 @@
     <string name="txt_Title">Enter title for your broadcast</string>
     <string name="title_activity_youtube_broadcast1">YoutubeBroadcast1</string>
     <string name="hello_world">Hello world!</string>
-    <string name="adv_settings">Advanced Settings</string>
+    <string name="btn_advSettings">Advanced Settings</string>
+    <string name="title_activity_advanced_settings">AdvancedSettings</string>
 
+    
+    <!--  -->
+    <string name="st_btn_YoutubeAccount">Youtube Account</string>
+    <string name="st_txt_startTime">Set start time, example(13:11-14:33)</string>
+    <string name="st_txt_startDate">Set start date, example(2014-06-18)</string>
 </resources>

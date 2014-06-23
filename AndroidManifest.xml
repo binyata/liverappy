@@ -32,16 +32,19 @@
 
             <!--
                          An <activity> element can also specify various intent filters—using the <intent-filter> element—in order 
-		                 to declare how other application components may activate it.
-            -->
+		                 to declare how other application components may activate it. -->
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         
-      
+        
+        
+        <activity
+            android:name="com.example.test1001.AdvancedSettings"
+            android:label="@string/title_activity_advanced_settings" >
+        </activity>
     </application>
 
 </manifest>

@@ -3,12 +3,7 @@ package com.example.test1001;
 
 // Imports
 import java.io.IOException;
-
-
-
-
-
-import java.util.Date;
+import java.util.Calendar;
 
 import com.google.android.gms.auth.GoogleAuthException;
 import com.google.android.gms.auth.GoogleAuthUtil;
@@ -39,6 +34,9 @@ public class CreateBroadcastEvent extends AsyncTask<Void, Void, Void>{
 	 */
 	private static YouTube youtube;
 
+	
+	
+	
 	// -------------------------------------Constructor ----------------------------------------------//
 	CreateBroadcastEvent(MainActivity activity, String name, String scope) {
 		this.mActivity = activity;
@@ -79,9 +77,9 @@ public class CreateBroadcastEvent extends AsyncTask<Void, Void, Void>{
 			// The fetchToken() method handles Google-specific exceptions,
 			// so this indicates something went wrong at a higher level.
 			// TIP: Check for network connectivity before starting the AsyncTask.
-			mActivity.show(ex.getLocalizedMessage());
+			mActivity.show("IOException"  + ex.getLocalizedMessage());
 		}catch(Exception ex){
-			mActivity.show(ex.getMessage());
+			mActivity.show("IOException"  + ex.getMessage());
 		}
 		return null;
 	}
@@ -93,6 +91,11 @@ public class CreateBroadcastEvent extends AsyncTask<Void, Void, Void>{
 	 */
 	
 	private void createYoutubeBroadcast(Auth auth){
+		
+		
+		Calendar cal = Calendar.getInstance();      // set the current Date, time, and TimeZone
+//		cal.add(Calendar.HOUR, +1);   				// Adds one more hour because the YouTube Servers are in a pacific zone. 
+		
 		try{ 
 
 			// This object is used to make YouTube Data API requests.
@@ -102,19 +105,23 @@ public class CreateBroadcastEvent extends AsyncTask<Void, Void, Void>{
 					, auth.getCredential()).setApplicationName("Martin").build();
 			mActivity.show("Authentication passed." + '\n' + "Youtube Object created");     	 // debug code							
  
-						
+								
 			// Creates a Broadcast snippet object
 			LiveBroadcastSnippet broadcastSnippet = new LiveBroadcastSnippet();
 					// Get the title for the broadcast event
 					broadcastSnippet.setTitle(mActivity.getTitleName());
 
-			broadcastSnippet.setScheduledStartTime(new DateTime(mActivity.getdater() + "T20:" + mActivity.getwatch()));
-			// "2014-06-15T20:23:00-06:00"
+					
+			broadcastSnippet.setScheduledStartTime(new DateTime(cal.getTime()));
+			mActivity.show("Time: " + cal.getTime());
+//			broadcastSnippet.setScheduledStartTime(new DateTime("2014-06-19T20:23:00-06:00")); 
+//			broadcastSnippet.setScheduledStartTime(new DateTime(mActivity.getdater() + "T20:" + mActivity.getwatch()));
+
 
 			// Creates a Broadcast status object
 			LiveBroadcastStatus status = new LiveBroadcastStatus();
 					// Set attributes 
-					status.setPrivacyStatus("private");                      
+					status.setPrivacyStatus("public");                      
 			
 			// Creates a broadcast object (a mix of Snippet and Status)
 			LiveBroadcast broadcast = new LiveBroadcast();
@@ -150,7 +157,8 @@ public class CreateBroadcastEvent extends AsyncTask<Void, Void, Void>{
 					youtube.liveBroadcasts().bind(returnedBroadcast.getId(), "id,contentDetails");
 			liveBroadcastBind.setStreamId(returnedStream.getId());
 			returnedBroadcast = liveBroadcastBind.execute();  
-			mActivity.show("BroadCast and LiveStream created Successfully!");
+			mActivity.show("Broadcast event object created Successfully!");
+			
 		}catch(IOException ex){
 			// The fetchToken() method handles Google-specific exceptions,
 			// so this indicates something went wrong at a higher level.
@@ -171,15 +179,24 @@ public class CreateBroadcastEvent extends AsyncTask<Void, Void, Void>{
 
 	protected String fetchToken() throws IOException {
 		try {
+			// Fetches the token using the context of the Activity, email, and scope. 
 			return GoogleAuthUtil.getToken(mActivity, mEmail, mScope);
+			
 		} catch (UserRecoverableAuthException userRecoverableException) {
-			// Unable to authenticate, such as when the user has not yet granted
-			// the app access to the account, but the user can fix this.
-			// Forward the user to an activity in Google Play services.
-
-			mActivity.show("UserRecoverableAuthException");
+			/*
+			 * Unable to authenticate because of the following reasons:
+			 * - the user needs to grant the permissions to the app so it can 
+			 *   access private data of the account (user consent)
+			 * - the user needs to re-enter the password 
+			 */
+			
+			//Publish the error on the UI threat text field area
+			mActivity.show("UserRecoverableAuthException has occurred."); 
+			
+			// Runs the handleException() method found in the MainActivity to handle the error
 			mActivity.handleException(userRecoverableException);
 
+		
 		} catch (GoogleAuthException fatalException) {
 			mActivity.show(fatalException.getMessage() + '\n' + fatalException.getLocalizedMessage());
 		}
