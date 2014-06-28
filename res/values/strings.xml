@@ -9,7 +9,7 @@
     <string name="hello_world">Hello world!</string>
     <string name="btn_advSettings">Advanced Settings</string>
     <string name="title_activity_advanced_settings">AdvancedSettings</string>
-
+	<string name="btn_sendTitleToServer">SendTitleToServer</string>
     
     <!--  -->
     <string name="st_btn_YoutubeAccount">Youtube Account</string>

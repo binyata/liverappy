@@ -1491,6 +1491,7 @@ containing a value of this type.
         public static final int homeAsUp=0x7f070018;
         public static final int hybrid=0x7f070004;
         public static final int icon=0x7f07003c;
+        public static final int id_btn_sendTitleToServer=0x7f070054;
         public static final int ifRoom=0x7f07001d;
         public static final int image=0x7f070039;
         public static final int listMode=0x7f070014;
@@ -1507,7 +1508,7 @@ containing a value of this type.
         public static final int radio=0x7f070041;
         public static final int sandbox=0x7f070008;
         public static final int satellite=0x7f070002;
-        public static final int scroller_id=0x7f070054;
+        public static final int scroller_id=0x7f070055;
         public static final int search_badge=0x7f070044;
         public static final int search_bar=0x7f070043;
         public static final int search_button=0x7f070045;
@@ -1527,7 +1528,7 @@ containing a value of this type.
         public static final int strict_sandbox=0x7f070009;
         public static final int submit_area=0x7f07004b;
         public static final int tabMode=0x7f070015;
-        public static final int tap_log_id=0x7f070055;
+        public static final int tap_log_id=0x7f070056;
         public static final int terrain=0x7f070003;
         public static final int title=0x7f07003d;
         public static final int top_action_bar=0x7f070032;
@@ -1643,6 +1644,7 @@ containing a value of this type.
         public static final int auth_client_using_bad_version_title=0x7f050000;
         public static final int btn_advSettings=0x7f050033;
         public static final int btn_name=0x7f05002e;
+        public static final int btn_sendTitleToServer=0x7f050035;
         /**  Button in confirmation dialog to enable Google Play services.  Clicking it
         will direct user to application settings of Google Play services where they
         can enable it [CHAR LIMIT=40] 
@@ -1736,9 +1738,9 @@ containing a value of this type.
         public static final int pick_account=0x7f05002f;
         /**   
          */
-        public static final int st_btn_YoutubeAccount=0x7f050035;
-        public static final int st_txt_startDate=0x7f050037;
-        public static final int st_txt_startTime=0x7f050036;
+        public static final int st_btn_YoutubeAccount=0x7f050036;
+        public static final int st_txt_startDate=0x7f050038;
+        public static final int st_txt_startTime=0x7f050037;
         public static final int title_activity_advanced_settings=0x7f050034;
         public static final int title_activity_youtube_broadcast1=0x7f050031;
         public static final int txt_Title=0x7f050030;

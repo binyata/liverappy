@@ -51,7 +51,14 @@
 		android:textSize="12sp"
 	    android:enabled="true"/>
 	
-	
+	<Button
+	    android:id="@+id/id_btn_sendTitleToServer"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:onClick="sendTitleToServer"
+		android:text="@string/btn_sendTitleToServer" 
+		android:textSize="12sp"
+	    android:enabled="true"/>
 	
    
 	    

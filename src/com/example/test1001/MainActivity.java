@@ -44,6 +44,8 @@ public class MainActivity extends Activity{
 	public String token;
 	
 	
+	private SendTitleServer con;
+	
 	// -------------------------------------Start-onCreate() -----------------------------------------//	
 	/**
 	 * The first method that runs. It sets a default layout (activity_main)...
@@ -111,7 +113,7 @@ public class MainActivity extends Activity{
 	 */
 	public void getCreateBroadcastButton(View view){
 		// Check if GooglePlayService library is installed
-		int statusCode = GooglePlayServicesUtil.isGooglePlayServicesAvailable(this);  // The statuscode contains the code if it exists 
+		int statusCode = GooglePlayServicesUtil.isGooglePlayServicesAvailable(this);  // The status-code contains the code if it exists 
 		if (statusCode == ConnectionResult.SUCCESS){				// If is a success then proceed the normal operation
 			createBroadcast();
 		} else if (GooglePlayServicesUtil.isUserRecoverableError(statusCode)) {
@@ -135,7 +137,35 @@ public class MainActivity extends Activity{
 		startActivity(intent);
 	}
 	
-	
+	/**
+	 * Captures the title string and sends it to the Server
+	 */
+	public void sendTitleToServer(View view){
+		if(getTitleName().equals("")){
+			show("Cannot send title because the title text_field is empty");
+		}
+		else{
+			// Connect to Server
+			// Check if the connection is null
+			if(con == null){
+				// Create a SendTitleServer OBJECT with the arguments (MainActivity) so there can be a reference to the main UI. 
+				con = new SendTitleServer(MainActivity.this);
+				
+				// The following commands will run the two threads simultaneously!
+				// So there is a problem, we have to make sure that the thread to connect to the server (ConnectToServerTask) is finished 
+				// FIRST before the other thread (SendTitleTask) is started. So, we have to find a way to pause the thread (SendTitleTask)
+				// and wake it when the thread (ConnectToServerTask) is done. This is done using LOCKS and CONDITIONS!!!
+				// LOCKS and Conditions "can be used to coordinate thread interactions "
+				con.connectToServer();  // Run thread to connect to Server
+				con.sendTitle(getTitleName()); // Run thread to send title strings
+			}
+			else{
+				con.sendTitle(getTitleName());
+			}
+
+		}
+
+	}
 	
 	
 	
@@ -271,6 +301,14 @@ public class MainActivity extends Activity{
     
    
   
+    
+    
+    
+    
+    
+    
+    
+    
     
 
     
