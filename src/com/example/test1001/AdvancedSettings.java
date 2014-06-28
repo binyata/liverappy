@@ -26,7 +26,7 @@ public class AdvancedSettings extends Activity {
 	}
 	
 	
-	// return the time
+	// return the time!
 	public String getwatch(){
 		return watch.getText().toString();
 	}

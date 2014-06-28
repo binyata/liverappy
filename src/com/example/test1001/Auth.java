@@ -10,7 +10,7 @@ import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.jackson2.JacksonFactory;
 
 public class Auth {
-	//YouTUbe stuff
+	//YouTUbe stuff!
 	protected MainActivity mActivity;
 	public static final HttpTransport HTTP_TRANSPORT = new NetHttpTransport();
 	public static final JsonFactory JSON_FACTORY = new JacksonFactory();

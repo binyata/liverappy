@@ -12,6 +12,7 @@ public class TitleBean implements Serializable{
 	}
 	
 	
+	// sets the data!
 	public void setDataCollection(ArrayList<String> al){
 		this.data = al;
 	}

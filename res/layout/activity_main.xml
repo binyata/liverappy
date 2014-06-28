@@ -13,7 +13,7 @@
         "resource type" (id in this case), a slash, then the resource name -->
         
 	<!--The at-symbol (@) at the beginning of the string indicates that the XML parser should parse and expand 
-	    the rest of the ID string and identify it as an ID resource. -->
+	    the rest of the ID string and identify it as an ID resource!. -->
 	    
 	<!-- there is the resource type and resource name. the id is stored in the gen/R.java -->
 	

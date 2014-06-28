@@ -17,7 +17,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
 
-        <!-- You must declare your activity in the manifest file in order for it to be accessible to the system -->
+        <!-- .You must declare your activity in the manifest file in order for it to be accessible to the system -->
         <!-- The android:name attribute is the only required attribute—it specifies the class name of the activity. -->
 
         <meta-data

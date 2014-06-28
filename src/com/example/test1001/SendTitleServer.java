@@ -14,7 +14,7 @@ import org.quickconnectfamily.json.JSONOutputStream;
 public class SendTitleServer {
 	private static MainActivity mActivity;   //Reference to the main Activity component
 	private static JSONOutputStream out;	 // Stream data OUT (PUSH)
-	private static JSONInputStream in;		 // Stream data IN (PULL)
+	private static JSONInputStream in;		 // Stream data IN (PULL)!
 	private static ToServer con = new ToServer();   // Object to connect to the Server
 	
 	

@@ -22,7 +22,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-//----------------------------------------------------Begin Class -------------------------------------------------------//
+//----------------------------------------------------Begin Class! -------------------------------------------------------//
 public class MainActivity extends Activity{
 	
 	//-------------------------------------- Class Variables ------------------------------------------//

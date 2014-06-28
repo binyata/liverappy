@@ -23,7 +23,7 @@ public class CreateBroadcastEvent extends AsyncTask<Void, Void, Void>{
 
 	//-------------------------------------- Class Variables ------------------------------------------//
 
-	//Attributes to get the Token
+	//Attributes to get the Token!
 	protected MainActivity mActivity;
 	protected String mScope;
 	protected String mEmail;
