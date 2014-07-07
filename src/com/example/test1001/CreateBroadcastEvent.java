@@ -10,6 +10,7 @@ import com.google.android.gms.auth.GoogleAuthUtil;
 import com.google.android.gms.auth.UserRecoverableAuthException;
 import com.google.api.client.util.DateTime;
 import com.google.api.services.youtube.YouTube;
+import com.google.api.services.youtube.YouTube.LiveBroadcasts.Bind;
 import com.google.api.services.youtube.model.CdnSettings;
 import com.google.api.services.youtube.model.LiveBroadcast;
 import com.google.api.services.youtube.model.LiveBroadcastSnippet;
@@ -91,73 +92,101 @@ public class CreateBroadcastEvent extends AsyncTask<Void, Void, Void>{
 	 */
 	
 	private void createYoutubeBroadcast(Auth auth){
-		
-		
 		Calendar cal = Calendar.getInstance();      // set the current Date, time, and TimeZone
 //		cal.add(Calendar.HOUR, +1);   				// Adds one more hour because the YouTube Servers are in a pacific zone. 
-		
 		try{ 
 
+			
+			//----------------------------------------------------------Youtube object ------------------------------------------------
 			// This object is used to make YouTube Data API requests.
 			youtube = new YouTube.Builder(
-					Auth.HTTP_TRANSPORT
+					  Auth.HTTP_TRANSPORT
 					, Auth.JSON_FACTORY
 					, auth.getCredential()).setApplicationName("Martin").build();
-			mActivity.show("Authentication passed." + '\n' + "Youtube Object created");     	 // debug code							
+			mActivity.show("Authentication passed." + '\n' 
+					     + "Youtube Object created by the Youtube.Builder");     	 
  
-								
-			// Creates a Broadcast snippet object
+			//-----------------------------------------------------Broadcast --------------------------------------------------------
+			// Creates a liveBroadcast-snippet object
 			LiveBroadcastSnippet broadcastSnippet = new LiveBroadcastSnippet();
 					// Get the title for the broadcast event
 					broadcastSnippet.setTitle(mActivity.getTitleName());
+					broadcastSnippet.setScheduledStartTime(new DateTime(cal.getTime()));  //Sets current time
+//					broadcastSnippet.setScheduledStartTime(new DateTime("2014-06-19T20:23:00-06:00")); 
 
-					
-			broadcastSnippet.setScheduledStartTime(new DateTime(cal.getTime()));
-			mActivity.show("Time: " + cal.getTime());
-//			broadcastSnippet.setScheduledStartTime(new DateTime("2014-06-19T20:23:00-06:00")); 
-//			broadcastSnippet.setScheduledStartTime(new DateTime(mActivity.getdater() + "T20:" + mActivity.getwatch()));
-
-
-			// Creates a Broadcast status object
+			
+			// Creates a liveBroadcast-status object
 			LiveBroadcastStatus status = new LiveBroadcastStatus();
-					// Set attributes 
+					// Set status
 					status.setPrivacyStatus("public");                      
 			
-			// Creates a broadcast object (a mix of Snippet and Status)
+			// Creates a broadcast object or resource (status + snippet) 
+			// The broadcast resource contains the basic data about the event (title, start time, end time, privacy.)
 			LiveBroadcast broadcast = new LiveBroadcast();
-
 					broadcast.setKind("youtube#liveBroadcast");
 					broadcast.setSnippet(broadcastSnippet);
 					broadcast.setStatus(status);
-
-
-			// Construct and execute the API request to insert the broadcast.
+					
+			// Constructs or prepares the API request to insert the broadcast-resource in the YouTube servers 
 			YouTube.LiveBroadcasts.Insert liveBroadcastInsert =
-					youtube.liveBroadcasts().insert("snippet,status", broadcast);
-			LiveBroadcast returnedBroadcast = liveBroadcastInsert.execute();
-
-						
-			// Create a snippet with the video stream's title.
+					youtube.liveBroadcasts().insert("snippet,status", broadcast);    
+			
+			// Execute the API request (sends it to the YouTube service) and catch the return result
+			LiveBroadcast returnedBroadcast = liveBroadcastInsert.execute();      
+		
+			
+			//--------------------------------------------------Stream-----------------------------------------------------------
+			
+			// Create a liveStream-Snippet object
 			LiveStreamSnippet streamSnippet = new LiveStreamSnippet();
-			streamSnippet.setTitle(mActivity.getTitleName() + "IO");
+				streamSnippet.setTitle(mActivity.getTitleName() + "IO");
+			
+			
+			// Creates a cdn object (Brief description of the live stream cdn settings) 
 			CdnSettings cdnSettings = new CdnSettings();
-			cdnSettings.setFormat("240p");
-			cdnSettings.setIngestionType("rtmp");
+				cdnSettings.setFormat("240p");
+				cdnSettings.setIngestionType("rtmp");
+				
+			// Creates a liveStream object or resource (snippet + cdn)
+			// The liveStream resource contains information about the video stream that you are transmitting to Youtube. 
 			LiveStream stream = new LiveStream();
-			stream.setKind("youtube#liveStream");
-			stream.setSnippet(streamSnippet);
-			stream.setCdn(cdnSettings);
+				stream.setKind("youtube#liveStream");
+				stream.setSnippet(streamSnippet);
+				stream.setCdn(cdnSettings);
+				
 
-			// Construct and execute the API request to insert the stream.
+			// Construct or prepares the API request to insert the stream-resource in the YouTube Servers
 			YouTube.LiveStreams.Insert liveStreamInsert =
-					youtube.liveStreams().insert("snippet,cdn", stream);
-			LiveStream returnedStream = liveStreamInsert.execute();
-
+					youtube.liveStreams().insert("snippet, cdn", stream);  
+			
+			// Execute the API request (sends it to the YouTube service) and catch the return result
+			LiveStream returnedStream = liveStreamInsert.execute();         
+			
+			
+			mActivity.show("Stream Name: " + returnedStream.getCdn().getIngestionInfo().getStreamName());
+			mActivity.show("Primary-IngestionAddress: " + returnedStream.getCdn().getIngestionInfo().getIngestionAddress());
+			mActivity.show("Backup-IngestionAddress: " + returnedStream.getCdn().getIngestionInfo().getBackupIngestionAddress());
+			
+			
+			//---------------------------------------------------Bind----------------------------------------------------------
+			// Having created your liveBroadcast and liveStream resources, you now need to associate the two using the liveBroadcasts.bind method. 
+			// This action links the video that you will transmit to YouTube to the broadcast that the video is for.
 			YouTube.LiveBroadcasts.Bind liveBroadcastBind =
-					youtube.liveBroadcasts().bind(returnedBroadcast.getId(), "id,contentDetails");
-			liveBroadcastBind.setStreamId(returnedStream.getId());
-			returnedBroadcast = liveBroadcastBind.execute();  
-			mActivity.show("Broadcast event object created Successfully!");
+					youtube.liveBroadcasts().bind(returnedBroadcast.getId(), "id,contentDetails"); // provide the broadcast object  
+					liveBroadcastBind.setStreamId(returnedStream.getId()); 						   // associate the stream object
+					
+			returnedBroadcast = liveBroadcastBind.execute(); 
+			
+			
+			mActivity.show("https://www.youtube.com/watch?v=" + returnedBroadcast.getId());
+			mActivity.show("Broadcast-Event created Successfully!");
+			
+			//-------------------------------------------------------------------------------------------------------------
+			
+			
+
+			
+		
 			
 		}catch(IOException ex){
 			// The fetchToken() method handles Google-specific exceptions,

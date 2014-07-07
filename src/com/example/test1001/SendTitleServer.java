@@ -66,7 +66,7 @@ public class SendTitleServer {
 				// Prepares Mr.bean!	
 				TitleBean bean = new TitleBean();
 				// Create Array-list for the data 
-				ArrayList<String> aDataList = new ArrayList<>();
+				ArrayList<String> aDataList = new ArrayList<String>();
 				aDataList.add(mTitle);
 
 				bean.setDataCollection(aDataList);   //Sets the data that the Server needs to accomplish the command
